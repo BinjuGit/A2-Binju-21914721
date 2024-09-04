@@ -5,8 +5,7 @@ IMPORTANT: Once you've cloned this to your forked repository, ensure that you co
 Please include your shared repository link here:
 
 Example:
-Choiru's shared repository: https://github.com/choiruzain-latrobe/Assignment2.git
-
+Binju's shared repository: https://github.com/BinjuGit/A2-Binju-21914721.git
 
 Make sure for **your case it is in Private**
 ## Access Database
