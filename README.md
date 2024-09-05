@@ -8,6 +8,8 @@ Example:
 Binju's shared repository: https://github.com/BinjuGit/A2-Binju-21914721.git
 
 #Assignment A
+task 1
+/home/vboxuser/A2-Binju-21914721/Screenshot 2024-09-04 204258.png
 
 Make sure for **your case it is in Private**
 ## Access Database
