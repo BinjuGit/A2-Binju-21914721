@@ -3,19 +3,23 @@ Binju's shared repository: https://github.com/BinjuGit/A2-Binju-21914721.git
 
 #Assignment A
 Task 1- User Interface Changes
-1. Change the button label from contact component from "Delete" to "Delete Contact"
+1. Change the button label from contact component from "Delete" to "Delete Contact".
+
 I changed the text in Contact.js, line 40
 ![alt text](image.png)
 
 2. Change the button label in phone component from "Add" to e.g "Add Choiru's Phone".
+
 For this, I changed the code in NewPhone.js, line 36
 ![alt text](image-1.png)
 
 3. Change the placeholder text "Name" with input type text into a drop-down menu with 4 categories.
+
 I changed the syntax in NewPhone.js, line 34
 ![alt text](image-5.png)
 
 4. In the <tr> element of the table, change the label "Name" to "Phone Type".
+
 I changed the text in PhoneList.js, line 14
 ![alt text](image-4.png)
 
