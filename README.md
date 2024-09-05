@@ -42,6 +42,22 @@ TASK 2 – API COMMAND DEMONSTRATIONS
 
 ![alt text](image-9.png)
 
+5. Show the API command for “Show Phone” and provide a screenshot of the output.
+
+![alt text](image-10.png)
+
+6. Show the API command for “Add Phone” and provide a screenshot of the output.
+
+![alt text](image-11.png)
+
+7. Show the API command for “Delete Phone” and provide a screenshot of the output.
+
+![alt text](image-12.png)
+
+8. Show the API command for “Update Phone” and provide a screenshot of the output.
+
+![alt text](image-13.png)
+
 
 
 ## Access Database
