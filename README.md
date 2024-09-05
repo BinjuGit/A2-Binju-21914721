@@ -10,10 +10,10 @@ Task 1- User Interface Changes
 ![alt text](image-1.png)
 
 3. Change the placeholder text "Name" with input type text into a drop-down menu with 4 categories.
-![alt text](image-2.png)
+![alt text](image-5.png)
 
 4. In the <tr> element of the table, change the label "Name" to "Phone Type".
-![alt text](image-3.png)
+![alt text](image-4.png)
 
 
 
