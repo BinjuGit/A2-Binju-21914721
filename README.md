@@ -2,7 +2,8 @@
 Binju's shared repository: https://github.com/BinjuGit/A2-Binju-21914721.git
 
 #Assignment A
-Task 1- User Interface Changes
+TASK 1 – USER INTERFACE CHANGES
+
 1. Change the button label from contact component from "Delete" to "Delete Contact".
 
 I changed the text in Contact.js, line 40
@@ -22,6 +23,24 @@ I changed the syntax in NewPhone.js, line 34
 
 I changed the text in PhoneList.js, line 14
 ![alt text](image-4.png)
+
+TASK 2 – API COMMAND DEMONSTRATIONS
+
+1. Show the API command for “Show Contact” and provide a screenshot of the output.
+
+![alt text](image-6.png)
+
+2. Show the API command for “Add Contact” and provide a screenshot of the output.
+
+![alt text](image-7.png)
+
+3. Show the API command for “Delete Contact” and provide a screenshot of the output.
+
+![alt text](image-8.png)
+
+4. Show the API command for “Update Contact” and provide a screenshot of the output.
+
+![alt text](image-9.png)
 
 
 
