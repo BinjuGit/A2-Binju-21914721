@@ -8,9 +8,8 @@ var corsOptions = {
 };
 
 const db = require("./models");
-db.sequelize.sync({ force: false }).then(() => {
-    console.log("Drop and re-sync db.");
-});
+db.sequelize.sync({ alter: true }) .then(() => { 
+  console.log("The database has been synchronized."); }) .catch(err => { console.error("Unable to synchronize the database:", err); });
 
 app.use(cors(corsOptions));
 

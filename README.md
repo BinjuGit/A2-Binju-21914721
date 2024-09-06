@@ -58,6 +58,42 @@ TASK 2 – API COMMAND DEMONSTRATIONS
 
 ![alt text](image-13.png)
 
+TASK 3 – DATABASE MODELING WITH SEQUELIZE AND TEST THE API COMMANDS WHEN THE 
+DATABASE MODIFICATION DONE.
+1.Modify the contacts
+
+a. Change the syntax as follows in line   of app.js as belows in line 11 and 12.
+
+![alt text](image-14.png)
+
+b. Then adding code in model.js to add the address as follows:
+
+![alt text](image-15.png)
+
+Making changes in controller.js
+
+![alt text](image-17.png)
+
+2, Modify the Phones Table
+
+a. Changing code in phone.model.js in line 8 and 11
+
+![alt text](image-18.png)
+
+b. Editing test phone.controller.js in line 8 and 9 as follows:
+
+![alt text](image-19.png)
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Access Database
