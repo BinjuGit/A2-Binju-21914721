@@ -104,8 +104,17 @@ Simply changing the text in Phone.js as follows:
 
 4. Test All APIs related to table modified contacts and phones.
 
+Showing Contacts
 
+![alt text](image-27.png)
 
+Showing contact having 'id' 3
+
+![alt text](image-28.png)
+
+Showing how to add address in contact
+
+![alt text](image-29.png)
 
 
 
