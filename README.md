@@ -116,9 +116,33 @@ Showing how to add address in contact
 
 ![alt text](image-29.png)
 
+Delete contact
 
+![alt text](image-30.png)
 
+Update contact
 
+![alt text](image-31.png)
+
+Showing all phones of a contact id 5
+
+![alt text](image-32.png)
+
+Showing all phones of contact id 5, id 8
+
+![alt text](image-33.png)
+
+Adding phone_type and phone_number
+
+![alt text](image-34.png)
+
+Deleting phone
+
+![alt text](image-35.png)
+
+Updating phone
+
+![alt text](image-36.png)
 
 
 
