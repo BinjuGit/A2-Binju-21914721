@@ -84,7 +84,13 @@ b. Editing test phone.controller.js in line 8 and 9 as follows:
 
 ![alt text](image-19.png)
 
+3. Adjust the Front-End 
 
+a. Changes made on NewCOntact.js in line 6 and 33
+
+![alt text](image-20.png)
+
+![alt text](image-21.png)
 
 
 
