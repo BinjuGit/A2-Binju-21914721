@@ -92,6 +92,23 @@ a. Changes made on NewCOntact.js in line 6 and 33
 
 ![alt text](image-21.png)
 
+Making chnages in NewPhone.js as below: 
+
+![alt text](image-22.png)
+![alt text](image-23.png)
+
+Simply changing the text in Phone.js as follows:
+
+![alt text](image-25.png)
+
+
+4. Test All APIs related to table modified contacts and phones.
+
+
+
+
+
+
 
 
 
