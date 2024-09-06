@@ -393,6 +393,375 @@ UPDATE COMPANY
 ![alt text](image-44.png)
 
 
+TASK 5 – FRONT END
+
+a. First, creating a new file Company.js in "/frontend/src/components". The code handles both updating and deleting company records by making API requests, and it ensures that the local state (companies) stays in sync with the backend database.
+
+function Company({ contact, company, companies, setCompanies }) {
+
+    // Function to delete a company
+    const handleDelete = async () => {
+        const response = await fetch(`http://localhost/api/contacts/${contact.id}/companies/${company.company_id}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            const updatedCompanies = companies.filter(comp => comp.company_id !== company.company_id);
+            setCompanies(updatedCompanies);
+        }
+    };
+
+    // Function to update a company
+    const handleUpdate = async (event) => {
+        event.stopPropagation();
+
+        const updatedCompany = {
+            ...company,
+            company_name: prompt("Enter new name for the company", company.company_name) || company.company_name,
+            company_address: prompt("Enter new address for the company", company.company_address) || company.company_address,
+        };
+
+        const response = await fetch(`http://localhost/api/contacts/${contact.id}/companies/${company.company_id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedCompany),
+        });
+
+        if (response.ok) {
+            const refreshedCompanies = companies.map(comp => (comp.company_id === company.company_id ? updatedCompany : comp));
+            setCompanies(refreshedCompanies);
+        } else {
+            console.error('Failed to update the company details');
+        }
+    };
+
+    
+}
+
+export default Company;
+
+
+b. Creating a new file NewCompany.js in "/frontend/src/components". This code defines a NewCompany component that manages the creation, updating, and deletion of company records associated with a contact. It uses two pieces of state, companyName and companyAddress, to hold input values for the new company being created. The handleCreate function sends a POST request to add a new company to the database, and once successful, it updates the local list of companies. The handleDelete function sends a DELETE request to remove a company from both the database and the local state. The handleUpdate function uses prompt dialogs to get updated company details and sends a PUT request to update the company information in the database. The component also renders a table of existing companies and displays "Edit" and "Delete" buttons for each company, allowing users to modify or remove company entries as needed.
+
+import { useState } from 'react';
+
+function NewCompany({ contact, companies, setCompanies }) {
+    const [companyName, setCompanyName] = useState('');
+    const [companyAddress, setCompanyAddress] = useState('');
+
+    const handleCreate = async (event) => {
+        event.preventDefault();  // Prevent form submission from refreshing the page
+
+        const response = await fetch(`http://localhost/api/contacts/${contact.id}/companies`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                company_name: companyName,
+                company_address: companyAddress,
+            }),
+        });
+
+        const newCompany = await response.json();
+
+        if (newCompany.company_id) {
+            setCompanies([...companies, newCompany]);
+            setCompanyName('');  // Reset the input fields
+            setCompanyAddress('');
+        }
+    };
+    const handleDelete = async (companyId, event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const response = await fetch(`http://localhost/api/contacts/${contact.id}/companies/${companyId}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            // Remove the deleted company from the companies array in state
+            const updatedCompanies = companies.filter((company) => company.company_id !== companyId);
+            setCompanies(updatedCompanies);
+        }
+    };
+    const handleUpdate = async (company, event) => {
+        event.stopPropagation();
+
+        const updatedCompany = {
+            ...company,
+            company_name: prompt("Enter new name for the company", company.company_name) || company.company_name,
+            company_address: prompt("Enter new address for the company", company.company_address) || company.company_address,
+        };
+
+        const response = await fetch(`http://localhost/api/contacts/${contact.id}/companies/${company.company_id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedCompany),
+        });
+
+        if (response.ok) {
+            const refreshedCompanies = companies.map(comp => 
+                comp.company_id === company.company_id ? updatedCompany : comp
+            );
+            setCompanies(refreshedCompanies);
+        } else {
+            console.error('Failed to update the company details');
+        }
+    };
+
+    return (
+        <div>
+        <form onSubmit={handleCreate} 
+        onClick={(e) => e.stopPropagation()}  // Stop event propagation to parent elements
+            className='new-company'>
+            <label htmlFor='company-name'>Company Name:</label>
+            <input
+                type='text'
+                id='company-name'
+                placeholder='Enter the company name'
+                onChange={(event) => setCompanyName(event.target.value)}
+                value={companyName}
+                required
+            />
+            <label htmlFor='company-address'>Company Address:</label>
+            <input
+                type='text'
+                id='company-address'
+                placeholder='Enter the company address'
+                
+                onChange={(event) => setCompanyAddress(event.target.value)}
+                value={companyAddress}
+            />
+            <button className='button green' type='submit'>
+                Create companyName
+            </button>
+        </form>
+          {/* Table to Display Companies */}
+          <div className="company-list">
+               <table>
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Company Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {companies.map((company) => (
+                        <tr key={company.company_id}>
+                            <td>{company.company_name}</td>
+                            <td>{company.company_address}</td>
+                            <td>
+                                
+                            <button
+                                    className="button blue"
+                                    onClick={(event) => handleUpdate(company, event)}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    type="button"    className="button red" 
+                                    onClick={(event) => handleDelete(company.company_id, event)}>
+                                    
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    );
+}
+
+export default NewCompany;
+
+
+c. Creating a new file CompanyList.js in "/frontend/src/components". This code defines a CompanyList component that renders a list of companies associated with a specific contact. It uses two components: NewCompany, which provides a form to add a new company, and Company, which handles individual company actions like editing and deleting. The component maps through the companies array and renders each company as a Company component. The setCompanies function is passed down to update the list when a company is added, edited, or deleted, ensuring that the UI stays in sync with the current list of companies.
+
+import Company from './Company';
+import NewCompany from './NewCompany';
+
+function CompanyList({ contact, companies, setCompanies }) {
+    return (
+        <div className='company-list'>
+            <NewCompany companies={companies} setCompanies={setCompanies} contact={contact} />
+
+            <table>
+                
+                <tbody>
+                    {companies.map((company) => (
+                        <Company
+                            key={company.company_id}
+                            company={company}
+                            companies={companies}
+                            setCompanies={setCompanies}
+                            contact={contact}
+                        />
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
+export default CompanyList;
+
+
+d.
+
+
+
+
+e. Added code in Contact.js file. The following added function allows users to edit the contact's name and email using a prompt, with the updates being sent to the server and reflected in the local state. The component also has a delete button to remove the contact. Additionally, the contact's associated phone numbers and companies can be expanded or collapsed by clicking on the contact, showing or hiding this information.
+
+// Function to update the contact
+     async function doUpdate(e) {
+        e.stopPropagation();
+
+        const updatedContact = {
+            ...contact,
+            name: prompt("Update contact name", contact.name) || contact.name,
+            email: prompt("Update contact email", contact.email) || contact.email
+        };
+
+        const response = await fetch(`http://localhost/api/contacts/${contact.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedContact),
+        });
+
+        if (response.ok) {
+            const newContacts = contacts.map(c => (c.id === contact.id ? updatedContact : c));
+            setContacts(newContacts);
+        } else {
+            console.error('Failed to update the contact');
+        }
+    }
+
+	 // Modify return section for contact summary, expand/collapse, and edit
+     return (
+        <div key={contact.id} className='contact' onClick={() => setExpanded(!expanded)}>
+            <div className='title'>
+                {/* Contact Summary */}
+                <h3>{contact.name} - {contact.email}</h3>
+                <p>
+                    <strong>Phone Count:</strong> {phones.length} | <strong>Company Count:</strong> {companies.length}
+                </p>
+
+                {/* Edit and Delete Buttons */}
+                <button className='button blue' onClick={doUpdate}>Edit Contact</button>
+                <button className='button red' onClick={doDelete}>Delete Contact</button>
+            </div>
+
+            {/* Expanded Phones and Companies Information */}
+            <div style={expandStyle}>
+                <hr />
+                <PhoneList phones={phones} setPhones={setPhones} contact={contact} />
+                <hr />
+                <CompanyList companies={companies} setCompanies={setCompanies} contact={contact} />
+            </div>
+        </div>
+    );
+}
+
+
+g. Changed the text in line 9 from Contacts to 'Add new contact' in ContactList.js. Added some code in line 6 and line 28 of NewContact.js file. 
+h. Then in NewContact.js, this added code modifies the return section to include labels for the contact name and address fields, making the form more instructional and interactive. The labeled inputs guide users to enter the necessary contact details, and the "Create Contact" button submits the form, improving user experience and clarity.
+
+   return (
+        <form className='new-contact' onSubmit={createContact}>
+            {/* Label and Input for Contact Name */}
+            <label htmlFor='contact-name'>Contact Name:</label>
+            <input
+                type='text'
+                id='contact-name'
+                placeholder='Enter contact name'
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                required
+            />
+
+            {/* Label and Input for Contact Address */}
+            <label htmlFor='contact-address'>Contact Address:</label>
+            <input
+                type='text'
+                id='contact-address'
+                placeholder='Enter contact address'
+                onChange={(e) => setAddress(e.target.value)}
+                value={address}
+            />
+
+            {/* Submit Button */}
+            <button className='button green' type='submit'>
+                Create Contact
+            </button>
+        </form>
+    );
+    }
+
+h. Added code in App.css. This CSS code styles a table that displays a list of companies in a structured format. It aligns the table in the center, applies consistent padding and borders to the table cells and headers, and uses a light gray background for the header. Additionally, it defines a general .button class for buttons, making them white-texted with rounded corners. It also styles a .blue button class for actions like "Edit," giving it a blue background, which becomes darker when hovered over for better user interaction.
+
+/* Company list styles similar to phone list */
+.company-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.company-list > table {
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.company-list > table td, .company-list > table th {
+    border: 1px solid #b1b1b1;
+    padding: 8px;
+}
+
+.company-list > table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #f2f2f2;  /* Optional: To make the header background stand out */
+}
+.button {
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for blue button */
+.blue {
+    background-color: #007BFF; /* Blue color */
+}
+
+.blue:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+
+
+
+
+
 
 
 ## Access Database
