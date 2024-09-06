@@ -374,6 +374,25 @@ Some edits done in app.js file in line 29:
 
 ![alt text](image-40.png)
 
+2. API Creation.
+
+SHOW COMPANY
+
+![alt text](image-41.png)
+
+ADD COMPANY
+
+![alt text](image-42.png)
+
+DELETE COMPANY
+
+![alt text](image-43.png)
+
+UPDATE COMPANY
+
+![alt text](image-44.png)
+
+
 
 
 ## Access Database
