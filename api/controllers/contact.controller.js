@@ -1,6 +1,7 @@
 const db = require("../models");
 const Contacts = db.contacts;
 const Phones = db.phones;
+const Companies = db.companies;
 const Op = db.Sequelize.Op;
 
 // Create contact
@@ -82,6 +83,9 @@ exports.delete = (req, res) => {
 
     Phones.destroy({
         where: { contactId: id }
+    })
+    Companies.destroy({
+        where: {contactId: id}
     })
     .then(num => {
         Contacts.destroy({
