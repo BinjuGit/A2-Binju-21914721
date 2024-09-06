@@ -144,11 +144,235 @@ Updating phone
 
 ![alt text](image-36.png)
 
+TASK 4 – EXPANDING THE EXISTING TABLES 
+
+1. Table creation 
+Added db.companies = require("./company.model.js")(sequelize, Sequelize); in line 23 of index.js
+
+![alt text](image-37.png)
 
 
+Then created a new file named 'company.model.js' in api/models. 
+
+module.exports = (sequelize, Sequelize) => {
+    const Company = sequelize.define("company", {
+        company_id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        company_name: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        company_address: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        contactId: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'contacts', // References contacts table
+                key: 'id'
+            },
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+        }
+    });
+
+    return Company;
+};
 
 
+Created a new file named'company.controllers.js' in api/controllers.
 
+const db = require("../models");
+const Companies = db.companies;
+const Op = db.Sequelize.Op;
+
+// Create company
+exports.create = (req, res) => {
+    const company = {
+        company_name: req.body.company_name,
+        company_address: req.body.company_address,
+        contactId: parseInt(req.params.contactId)
+    };
+
+    Companies.create(company)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while creating the company."
+            });
+        });
+};
+
+// Get all companies
+exports.findAll = (req, res) => {
+    Companies.findAll({
+        where: {
+            contactId: parseInt(req.params.contactId)
+        }
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving companies."
+            });
+        });
+};
+
+// Get one company by id
+exports.findOne = (req, res) => {
+    Companies.findOne({
+        where: {
+            contactId: req.params.contactId,
+            company_id: req.params.companyId
+        }
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving the company."
+            });
+        });
+};
+
+// Update one company by id
+exports.update = (req, res) => {
+    const company_id = req.params.companyId;
+
+    Companies.update(req.body, {
+        where: {
+            company_id: company_id,
+            contactId: req.params.contactId
+        }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Company was updated successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update Company with id=${company_id}. Maybe Company was not found or req.body is empty!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Company with id=" + company_id
+            });
+        });
+};
+
+// Delete one company by id
+exports.delete = (req, res) => {
+    const company_id = req.params.companyId;
+
+    Companies.destroy({
+        where: {
+            company_id: company_id,
+            contactId: req.params.contactId
+        }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Company was deleted successfully!"
+                });
+            } else {
+                res.send({
+                    message: `Cannot delete Company with id=${company_id}. Maybe Company was not found!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete Company with id=" + company_id
+            });
+        });
+};
+
+
+I added some codes in contact.controller.js file as follows:
+
+![alt text](image-38.png)
+
+![alt text](image-39.png)
+
+
+Then I made some changes in the stats.controller.js file in line 4, 11 and 19 which are shown below:
+
+const db = require("../models");
+const Phones = db.phones;
+const Contacts = db.contacts;
+const Companies = db.companies;
+const Op = db.Sequelize.Op;
+
+exports.calculate = (req, res) => {
+    Promise.all([
+        Contacts.count(),
+        Phones.count(),
+        Companies.count(),
+        Contacts.max('updatedAt'),
+        Contacts.min('createdAt')
+    ])
+    .then(([totalContacts, totalPhones, totalCompanies, lastUpdatedContact, oldestContact]) => {
+        res.send({
+            totalContacts: totalContacts,
+            totalPhones: totalPhones,
+            totalCompanies: totalCompanies,
+            lastUpdatedContact: lastUpdatedContact,
+            oldestContact: oldestContact
+        });
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while performing the calculation."
+        });
+    });
+};
+
+
+Then opened a file called 'Companies.routes.js' in "/api/routes". 
+Syntax used in the file are as follows:
+
+module.exports = app => {
+    const companies = require("../controllers/company.controller.js");
+    
+    // Create a new router instance
+    var router = require("express").Router();
+
+    // Create a new company for a specific contact
+    router.post("/contacts/:contactId/companies", companies.create);
+
+    // Get all companies for a specific contact
+    router.get("/contacts/:contactId/companies", companies.findAll);
+
+    // Get a single company by its ID for a specific contact
+    router.get("/contacts/:contactId/companies/:companyId", companies.findOne);
+
+    // Update a company by its ID for a specific contact
+    router.put("/contacts/:contactId/companies/:companyId", companies.update);
+
+    // Delete a company by its ID for a specific contact
+    router.delete("/contacts/:contactId/companies/:companyId", companies.delete);
+
+    // Use the router for all API routes starting with /api
+    app.use('/api', router);
+};
+
+
+Some edits done in app.js file in line 29:
+
+![alt text](image-40.png)
 
 
 
