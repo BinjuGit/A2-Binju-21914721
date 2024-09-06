@@ -613,9 +613,9 @@ function CompanyList({ contact, companies, setCompanies }) {
 export default CompanyList;
 
 
-d.
+d. Below I have shown the changes made on Contact.js file. 
 
-
+![alt text](image-48.png)
 
 
 e. Added code in Contact.js file. The following added function allows users to edit the contact's name and email using a prompt, with the updates being sent to the server and reflected in the local state. The component also has a delete button to remove the contact. Additionally, the contact's associated phone numbers and companies can be expanded or collapsed by clicking on the contact, showing or hiding this information.
@@ -758,8 +758,13 @@ h. Added code in App.css. This CSS code styles a table that displays a list of c
 
 
 
+In the frontend implementation, I have successfully created an interface to manage the newly created companies table, as required in Task 5. The interface allows the user to add new companies by inputting the company name and address. Each company can also be edited or deleted using the provided buttons. When a company is edited, a prompt appears for the user to update the company name and address, and the changes are reflected in real time. The interface also displays the total number of phone numbers and companies associated with each contact at the top of each section, providing a summary view. The design is interactive and user-friendly, ensuring that all (Create, Read, Update, Delete) functionalities are covered for managing the company records.
 
+![alt text](image-45.png)
 
+![alt text](image-46.png)
+
+![alt text](image-47.png)
 
 
 
