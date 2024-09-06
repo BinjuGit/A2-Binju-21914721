@@ -165,3 +165,49 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+/* Company list styles similar to phone list */
+.company-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.company-list > table {
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.company-list > table td, .company-list > table th {
+    border: 1px solid #b1b1b1;
+    padding: 8px;
+}
+
+.company-list > table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #f2f2f2;  /* Optional: To make the header background stand out */
+}
+.button {
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for blue button */
+.blue {
+    background-color: #007BFF; /* Blue color */
+}
+
+.blue:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

@@ -6,7 +6,7 @@ function ContactList(props) {
 
 	return (
 		<div className='contact-list'>
-            <h2>Contacts</h2>
+            <h2>Add new contact</h2>
 
             <NewContact contacts={contacts} setContacts={setContacts} />
 
